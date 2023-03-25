@@ -11,7 +11,7 @@ export default function PostView(props: PostWithUser) {
     <div key={post.id} className="flex gap-3 border-b border-slate-400 p-4">
       <Image
         src={author.profileImageUrl}
-        alt="Profile Image"
+        alt={`@${author.username}s profile image`}
         className="rounded-full"
         height={56}
         width={56}

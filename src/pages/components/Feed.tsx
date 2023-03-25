@@ -1,5 +1,5 @@
 import { api } from "~/utils/api";
-import { LoadingPage } from "./Loading";
+import { LoadingPage } from "./LoadingSpinner";
 import PostView from "./PostView";
 
 export default function Feed() {
