@@ -7,7 +7,7 @@ import CreatePostWizard from "./components/CreatePostWizard";
 import Feed from "./components/Feed";
 
 const Home: NextPage = () => {
-  const { user, isLoaded: userLoaded, isSignedIn } = useUser();
+  const { isLoaded: userLoaded, isSignedIn } = useUser();
   api.posts.getAll.useQuery();
 
   // Return null if the user or posts haven't loaded yet, since user tends to load faster than posts
