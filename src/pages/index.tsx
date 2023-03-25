@@ -4,14 +4,14 @@ import Head from "next/head";
 import { SignInButton, useUser } from "@clerk/nextjs";
 import { api } from "~/utils/api";
 import CreatePostWizard from "./components/CreatePostWizard";
-import PostView from "./components/PostView";
+import Feed from "./components/Feed";
 
 const Home: NextPage = () => {
-  const user = useUser();
+  const { user, isLoaded: userLoaded, isSignedIn } = useUser();
+  api.posts.getAll.useQuery();
 
-  const { data, isLoading } = api.posts.getAll.useQuery();
-  if (isLoading) return <div>Loading...</div>;
-  if (!data) return <div>Something Went Wrong</div>;
+  // Return null if the user or posts haven't loaded yet, since user tends to load faster than posts
+  if (!userLoaded) return null;
 
   return (
     <>
@@ -23,13 +23,9 @@ const Home: NextPage = () => {
       <main className="flex h-screen justify-center">
         <div className="h-full w-full border-x border-slate-400 md:max-w-2xl ">
           <div className="flex justify-center border-b border-slate-400 p-4">
-            {user.isSignedIn ? <CreatePostWizard /> : <SignInButton />}
+            {isSignedIn ? <CreatePostWizard /> : <SignInButton />}
           </div>
-          <div className="flex flex-col">
-            {data?.map((fullPost) => (
-              <PostView {...fullPost} key={fullPost.post.id} />
-            ))}
-          </div>
+          <Feed />
         </div>
       </main>
     </>
