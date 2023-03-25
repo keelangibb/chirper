@@ -1,16 +1,7 @@
 import { type NextPage } from "next";
 import Head from "next/head";
 
-import { useUser } from "@clerk/nextjs";
-import { api } from "~/utils/api";
-
 const SinglePostPage: NextPage = () => {
-  const { isLoaded: userLoaded, isSignedIn } = useUser();
-  api.posts.getAll.useQuery();
-
-  // Return null if the user or posts haven't loaded yet, since user tends to load faster than posts
-  if (!userLoaded) return null;
-
   return (
     <>
       <Head>
@@ -19,7 +10,7 @@ const SinglePostPage: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="flex h-screen justify-center">
-        <div>Post View</div>
+        <div>Profile View</div>
       </main>
     </>
   );
