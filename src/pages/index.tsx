@@ -3,8 +3,8 @@ import Head from "next/head";
 
 import { SignInButton, useUser } from "@clerk/nextjs";
 import { api } from "~/utils/api";
-import CreatePostWizard from "./components/CreatePostWizard";
-import Feed from "./components/Feed";
+import CreatePostWizard from "../components/CreatePostWizard";
+import Feed from "../components/Feed";
 
 const Home: NextPage = () => {
   const { isLoaded: userLoaded, isSignedIn } = useUser();
