@@ -1,5 +1,6 @@
 import { SignInButton, useUser } from "@clerk/nextjs";
 import { type NextPage } from "next";
+import Loading from "~/components/LoadingSpinner";
 import { api } from "~/utils/api";
 import CreatePostWizard from "../components/CreatePostWizard";
 import Feed from "../components/Feed";
@@ -19,6 +20,7 @@ const Home: NextPage = () => {
             {isSignedIn ? <CreatePostWizard /> : <SignInButton />}
           </div>
           <Feed />
+          <Loading size={64} />
         </div>
       </main>
     </>

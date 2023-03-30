@@ -4,7 +4,6 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import { api } from "~/utils/api";
 import LoadingSpinner from "./LoadingSpinner";
-
 export default function CreatePostWizard() {
   const { user } = useUser();
   const [input, setInput] = useState("");
@@ -48,8 +47,8 @@ export default function CreatePostWizard() {
           if (e.key === "Enter") {
             e.preventDefault();
             if (input !== "") {
+              mutate({ content: input });
             }
-            mutate({ content: input });
           }
         }}
       />
