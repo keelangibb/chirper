@@ -6,8 +6,7 @@ import type { RouterOutputs } from "~/utils/api";
 
 dayjs.extend(relativeTime);
 type PostWithUser = RouterOutputs["posts"]["getAll"][0];
-export default function PostView(props: PostWithUser) {
-  const { post, author } = props;
+export default function PostView({ post, author }: PostWithUser) {
   return (
     <div key={post.id} className="flex gap-3 border-b border-slate-400 p-4">
       <Image

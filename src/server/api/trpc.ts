@@ -89,6 +89,7 @@ const enforceUserIsAuthed = t.middleware(async ({ ctx, next }) => {
       code: "UNAUTHORIZED",
     });
   }
+
   return next({
     ctx: {
       userId: ctx.userId,
