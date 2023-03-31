@@ -8,7 +8,8 @@ dayjs.extend(relativeTime);
 
 type PostWithUser = RouterOutputs["posts"]["getAll"][0];
 
-export default function PostView({ post, author }: PostWithUser) {
+export default function PostView(props: PostWithUser) {
+  const { post, author } = props;
   return (
     <div className="flex gap-3 border-b border-slate-400 p-4">
       <Image

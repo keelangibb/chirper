@@ -2,6 +2,7 @@ import type { GetStaticProps, NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
 import { PageLayout } from "~/components/PageLayout";
+import ProfileFeed from "~/components/ProfileFeed";
 import { generateSSGHelper } from "~/server/helpers/ssgHelper";
 import { api } from "~/utils/api";
 
@@ -30,6 +31,7 @@ const ProfilePage: NextPage<{ username: string }> = ({ username }) => {
         <div className="h-[64px]" />
         <div className="p-4 text-2xl font-bold">@{user.username}</div>
         <div className="w-full border-b border-slate-400" />
+        <ProfileFeed userId={user.id} />
       </PageLayout>
     </>
   );
