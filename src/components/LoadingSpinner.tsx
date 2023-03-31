@@ -27,7 +27,7 @@ export default function Loading({ size = 16 }) {
 export function LoadingPage() {
   return (
     <div className="absolute top-0 right-0 flex h-screen w-screen items-center justify-center">
-      <Loading size={40} />
+      <Loading size={60} />
     </div>
   );
 }

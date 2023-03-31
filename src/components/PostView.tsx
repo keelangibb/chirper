@@ -10,7 +10,7 @@ type PostWithUser = RouterOutputs["posts"]["getAll"][0];
 
 export default function PostView({ post, author }: PostWithUser) {
   return (
-    <div key={post.id} className="flex gap-3 border-b border-slate-400 p-4">
+    <div className="flex gap-3 border-b border-slate-400 p-4">
       <Image
         src={author.profileImageUrl}
         alt={`@${author.username}s profile image`}
@@ -21,7 +21,7 @@ export default function PostView({ post, author }: PostWithUser) {
       <div className="flex flex-col">
         <div className="flex gap-1 text-slate-300">
           <Link href={`/@${author.username}`}>
-            <span>{`@${author.username}`}</span>
+            <span>@{author.username}</span>
           </Link>
           <Link href={`/post/${post.id}`}>
             <span className="font-thin">{` • ${dayjs(

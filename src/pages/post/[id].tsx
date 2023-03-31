@@ -2,6 +2,7 @@ import { createProxySSGHelpers } from "@trpc/react-query/ssg";
 import type { GetStaticProps, NextPage } from "next";
 import Head from "next/head";
 import superjson from "superjson";
+import { PageLayout } from "~/components/PageLayout";
 import { appRouter } from "~/server/api/root";
 import { prisma } from "~/server/db";
 
@@ -11,9 +12,9 @@ const SinglePostPage: NextPage = () => {
       <Head>
         <title>Post</title>
       </Head>
-      <main className="flex h-screen justify-center">
+      <PageLayout>
         <div>Post View</div>
-      </main>
+      </PageLayout>
     </>
   );
 };

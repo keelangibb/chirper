@@ -8,10 +8,3 @@ export function filterUserForClient(user: User) {
     profileImageUrl,
   };
 }
-
-export function test() {
-  const queryParams = new URLSearchParams(document.location.search);
-  const redirectUrl = queryParams.get("url");
-  if (!redirectUrl) return;
-  document.location = redirectUrl; // Noncompliant
-}
