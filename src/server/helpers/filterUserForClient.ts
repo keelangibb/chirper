@@ -6,5 +6,9 @@ export function filterUserForClient(user: User) {
     id,
     username,
     profileImageUrl,
+    externalUsername:
+      user.externalAccounts.find(
+        (externalAccount) => externalAccount.provider === "oauth_github"
+      )?.username || null,
   };
 }

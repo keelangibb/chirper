@@ -1,10 +1,7 @@
-import { createProxySSGHelpers } from "@trpc/react-query/ssg";
 import type { GetStaticProps, NextPage } from "next";
 import Head from "next/head";
-import superjson from "superjson";
 import { PageLayout } from "~/components/PageLayout";
-import { appRouter } from "~/server/api/root";
-import { prisma } from "~/server/db";
+import { generateSSGHelper } from "~/server/helpers/ssgHelper";
 
 const SinglePostPage: NextPage = () => {
   return (
@@ -20,32 +17,24 @@ const SinglePostPage: NextPage = () => {
 };
 
 export const getStaticProps: GetStaticProps = async (context) => {
-  const ssg = createProxySSGHelpers({
-    router: appRouter,
-    ctx: { prisma, userId: null },
-    transformer: superjson, // optional - adds superjson serialization
-  });
+  const ssg = generateSSGHelper();
 
-  const slug = context.params?.slug;
+  const id = context.params?.id;
 
-  if (typeof slug !== "string") throw new Error("no slug");
-  const username = slug.replace("@", "");
+  if (typeof id !== "string") throw new Error("no id");
 
-  await ssg.profile.getUserByUsername.prefetch({ username: slug });
+  await ssg.posts.getById.prefetch({ id });
 
   return {
     props: {
       trpcState: ssg.dehydrate(),
-      username,
+      id,
     },
   };
 };
 
 export const getStaticPaths = () => {
-  return {
-    paths: [],
-    fallback: "blocking",
-  };
+  return { paths: [], fallback: "blocking" };
 };
 
 export default SinglePostPage;
