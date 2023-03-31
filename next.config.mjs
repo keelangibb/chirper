@@ -8,7 +8,7 @@
 const config = {
   reactStrictMode: true,
   images: {
-    domains: ['images.clerk.dev'],
+    domains: ["images.clerk.dev", "www.gravatar.com"],
   },
   /**
    * If you have the "experimental: { appDir: true }" setting enabled, then you
