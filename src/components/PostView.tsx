@@ -1,8 +1,10 @@
+import { useUser } from "@clerk/nextjs";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import Image from "next/image";
 import Link from "next/link";
-import type { RouterOutputs } from "~/utils/api";
+import { toast } from "react-hot-toast";
+import { api, type RouterOutputs } from "~/utils/api";
 
 dayjs.extend(relativeTime);
 
@@ -10,6 +12,19 @@ type PostWithUser = RouterOutputs["posts"]["getAll"][0];
 
 export default function PostView(props: PostWithUser) {
   const { post, author } = props;
+  const ctx = api.useContext();
+  const { user } = useUser();
+
+  const { mutate: deletePost } = api.posts.delete.useMutation({
+    onSuccess() {
+      void ctx.posts.getAll.invalidate();
+      toast.success("Post deleted!");
+    },
+    onError() {
+      toast.error("Failed to delete post! Please try again later.");
+    },
+  });
+
   return (
     <div className="flex gap-3 border-b border-slate-400 p-4">
       <Image
@@ -19,7 +34,7 @@ export default function PostView(props: PostWithUser) {
         height={56}
         width={56}
       />
-      <div className="flex flex-col">
+      <div className="flex grow flex-col">
         <div className="flex gap-1 text-slate-300">
           <Link href={`/@${author.username}`}>
             <span>@{author.username}</span>
@@ -32,6 +47,17 @@ export default function PostView(props: PostWithUser) {
         </div>
         <span className="text-2xl">{post.content}</span>
       </div>
+      {post.authorId === user?.id && (
+        <button
+          onClick={() => {
+            deletePost({
+              postId: post.id,
+            });
+          }}
+        >
+          Delete Post
+        </button>
+      )}
     </div>
   );
 }

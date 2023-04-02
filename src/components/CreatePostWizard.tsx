@@ -1,7 +1,8 @@
-import { useUser } from "@clerk/nextjs";
+import { SignOutButton, useUser } from "@clerk/nextjs";
 import Image from "next/image";
 import { useState } from "react";
 import toast from "react-hot-toast";
+import { createSchema } from "~/shared/schemas/posts.schema";
 import { api } from "~/utils/api";
 import LoadingSpinner from "./LoadingSpinner";
 export default function CreatePostWizard() {
@@ -46,20 +47,27 @@ export default function CreatePostWizard() {
         onKeyDown={(e) => {
           if (e.key === "Enter") {
             e.preventDefault();
-            if (input !== "") {
-              mutate({ content: input });
-            }
+            createPost();
           }
         }}
       />
-      {input !== "" && !isPosting && (
-        <button onClick={() => mutate({ content: input })}>Post</button>
-      )}
+      {input !== "" && !isPosting && <button onClick={createPost}>Post</button>}
       {isPosting && (
         <div className="flex items-center justify-center">
           <LoadingSpinner size={20} />
         </div>
       )}
+      <SignOutButton />
     </div>
   );
+
+  function createPost() {
+    const result = createSchema.safeParse({ content: input });
+    if (result.success) return mutate({ content: input });
+
+    toast.error(
+      result.error.issues[0]?.message ||
+        "Failed to post! Please try again later."
+    );
+  }
 }

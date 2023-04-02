@@ -5,8 +5,8 @@ import PostView from "~/components/PostView";
 import { generateSSGHelper } from "~/server/helpers/ssgHelper";
 import { api } from "~/utils/api";
 
-const SinglePostPage: NextPage<{ id: string }> = ({ id }) => {
-  const { data: post } = api.posts.getByPostId.useQuery({ id });
+const SinglePostPage: NextPage<{ postId: string }> = ({ postId }) => {
+  const { data: post } = api.posts.getByPostId.useQuery({ postId: postId });
   if (!post) return <div>404</div>;
 
   return (
@@ -24,16 +24,16 @@ const SinglePostPage: NextPage<{ id: string }> = ({ id }) => {
 export const getStaticProps: GetStaticProps = async (context) => {
   const ssg = generateSSGHelper();
 
-  const id = context.params?.id;
+  const postId = context.params?.id;
 
-  if (typeof id !== "string") throw new Error("no id");
+  if (typeof postId !== "string") throw new Error("no postId");
 
-  await ssg.posts.getByPostId.prefetch({ id });
+  await ssg.posts.getByPostId.prefetch({ postId: postId });
 
   return {
     props: {
       trpcState: ssg.dehydrate(),
-      id,
+      postId,
     },
   };
 };
