@@ -20,7 +20,7 @@ export default function CreatePostWizard() {
     },
     onError: (e) => {
       const errorMessage = e.data?.zodError?.fieldErrors?.content;
-      if (errorMessage && errorMessage[0]) {
+      if (errorMessage?.[0]) {
         toast.error(errorMessage[0]);
       } else {
         toast.error("Failed to post! Please try again later.");
@@ -32,6 +32,7 @@ export default function CreatePostWizard() {
     <div className="flex w-full gap-3">
       <Image
         src={user.profileImageUrl}
+        priority
         alt="Profile Image"
         className="h-14 w-14 rounded-full"
         height={56}
@@ -66,7 +67,7 @@ export default function CreatePostWizard() {
     if (result.success) return mutate({ content: input });
 
     toast.error(
-      result.error.issues[0]?.message ||
+      result.error.issues[0]?.message ??
         "Failed to post! Please try again later."
     );
   }

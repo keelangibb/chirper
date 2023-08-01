@@ -10,6 +10,10 @@
       "when": "$(basename).ts"
     },
     "**/*.js.map": true,
-    "**/node_modules": false
+    "**/node_modules": true
+  },
+  "sonarlint.connectedMode.project": {
+    "connectionId": "keelangibb",
+    "projectKey": "keelangibb_chirper"
   }
 }
