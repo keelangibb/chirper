@@ -1,5 +1,4 @@
-import { SignOutButton, useUser } from "@clerk/nextjs";
-import Image from "next/image";
+import { UserButton, useUser } from "@clerk/nextjs";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { createSchema } from "~/shared/schemas/posts.schema";
@@ -30,13 +29,16 @@ export default function CreatePostWizard() {
 
   return (
     <div className="flex w-full gap-3">
-      <Image
-        src={user.profileImageUrl}
-        priority
-        alt="Profile Image"
-        className="h-14 w-14 rounded-full"
-        height={56}
-        width={56}
+      <UserButton
+        afterSignOutUrl="/"
+        appearance={{
+          elements: {
+            userButtonAvatarBox: {
+              width: 56,
+              height: 56,
+            },
+          },
+        }}
       />
       <input
         placeholder="Type some emojis!"
@@ -58,7 +60,6 @@ export default function CreatePostWizard() {
           <LoadingSpinner size={20} />
         </div>
       )}
-      <SignOutButton />
     </div>
   );
 
